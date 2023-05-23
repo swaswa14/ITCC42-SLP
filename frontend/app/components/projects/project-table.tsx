@@ -4,7 +4,7 @@ import { ProjectGroupType, ProjectType } from "@/types/project";
 import React from "react";
 import { DataTable } from "./data-table";
 import { columns } from "@/app/columns";
-
+import FormDialog from "./form-dialog";
 interface Props {
   initialData: ProjectGroupType;
 }
@@ -18,6 +18,7 @@ const ProjectTable = ({ initialData }: Props) => {
           <DataTable columns={columns} data={schoolYearProjects} />
         </div>
       ))}
+      <FormDialog />
     </div>
   );
 };
