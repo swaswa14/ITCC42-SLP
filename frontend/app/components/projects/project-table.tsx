@@ -1,6 +1,6 @@
 "use client";
 
-import { ProjectGroupType, ProjectType } from "@/types/project";
+import { ProjectGroupType } from "@/types/project";
 import React from "react";
 import { DataTable } from "./data-table";
 import { columns } from "@/app/columns";
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const ProjectTable = ({ initialData }: Props) => {
+  console.log(initialData);
   return (
     <div className="space-y-8">
       {Object.entries(initialData).map(([schoolYear, schoolYearProjects]) => (
