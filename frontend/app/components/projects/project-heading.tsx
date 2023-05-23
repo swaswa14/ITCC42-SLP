@@ -10,7 +10,7 @@ const ProjectHeading = () => {
       <p className=" text-lg text-slate-700">
         <Balancer>External Projects accessed in SY 2017-2021</Balancer>
       </p>
-      <button className="text-md bg-slate-900 text-white rounded-md px-4 py-2 font-medium !mt-6">
+      <button className="text-md bg-blue-500 text-white rounded-md px-4 py-2 font-medium !mt-6">
         Add Project
       </button>
     </header>
