@@ -7,44 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import TextareaAutosize from "react-textarea-autosize";
 import { formatDate } from "@/lib/utils";
-
-const dateOrNull = z
-  .string()
-  .refine(
-    (val) => {
-      if (val === "") return true; // accept empty strings
-      const date = new Date(val);
-      return !isNaN(date.getTime()); // only accept strings that can be converted to a valid date
-    },
-    { message: "Invalid date" }
-  )
-  .transform((val) => (val === "" ? null : new Date(val)));
-
-const schema = z.object({
-  schoolYear: z.enum([
-    "2015-2016",
-    "2016-2017",
-    "2017-2018",
-    "2018-2019",
-    "2019-2020",
-    "2020-2021",
-    "2021-2022",
-    "2022-2023",
-    "2023-2024",
-  ]),
-  leadUnit: z.string().nonempty(),
-  projectTitle: z.string().nonempty(),
-  startDateRemarks: z.string().nullable().optional(),
-  startDate: dateOrNull.nullable().optional(),
-
-  endDateRemarks: z.string().nullable().optional(),
-  endDate: dateOrNull.nullable().optional(),
-  partnerOrFunder: z.string().nonempty(),
-  amountRemarks: z.string().nullable().optional(),
-  amount: z.coerce.number().nullable().optional(),
-  principalProponent: z.string().nonempty(),
-  statusOrRemarks: z.string().nonempty(),
-});
+import { schema } from "@/lib/schema";
 
 type FormData = z.infer<typeof schema>;
 
@@ -73,8 +36,8 @@ const ProjectForm = () => {
               | undefined),
       leadUnit: selectedRow === null ? "" : selectedRow.leadUnit,
       projectTitle: selectedRow === null ? "" : selectedRow.projectTitle,
-      startDate: selectedRow && selectedRow.startDate,
-      endDate: selectedRow && selectedRow.endDate,
+      startDate: selectedRow ? (selectedRow.startDate as any) : undefined,
+      endDate: selectedRow ? (selectedRow.endDate as any) : undefined,
       startDateRemarks:
         selectedRow === null ? "" : selectedRow.startDateRemarks,
       endDateRemarks: selectedRow === null ? "" : selectedRow.endDateRemarks,
@@ -96,8 +59,6 @@ const ProjectForm = () => {
     };
     console.log(formattedData);
   };
-
-  console.log(errors);
 
   const schoolYearOptions = [
     "2015-2016",
