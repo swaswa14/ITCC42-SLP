@@ -8,15 +8,20 @@ import { z } from "zod";
 import TextareaAutosize from "react-textarea-autosize";
 import { formatDate } from "@/lib/utils";
 import { schema } from "@/lib/schema";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addNewProject, updateProject } from "@/lib/axiosApi";
 
 type FormData = z.infer<typeof schema>;
 
 const ProjectForm = () => {
   const { selectedRow } = useContext(FormContext);
+  const queryClient = useQueryClient();
+  const { isOpen, setIsOpen } = useContext(FormContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -50,26 +55,48 @@ const ProjectForm = () => {
     },
   });
 
+  // new project mutation
+  const addProjectMutation = useMutation({
+    mutationFn: addNewProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+
+  // update project mutation
+  const updateProjectMutation = useMutation({
+    mutationFn: updateProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+
   //   submit function
   const onSubmit = (data: FormData) => {
     const formattedData = {
       ...data,
+      id: selectedRow?.id,
       endDate: data.endDate && formatDate(data.endDate),
       startDate: data.startDate && formatDate(data.startDate),
     };
     console.log(formattedData);
+
+    if (!selectedRow) {
+      addProjectMutation.mutate(formattedData);
+      setIsOpen(!isOpen);
+      reset();
+    } else {
+      updateProjectMutation.mutate(formattedData);
+      setIsOpen(!isOpen);
+      reset();
+    }
   };
 
   const schoolYearOptions = [
-    "2015-2016",
-    "2016-2017",
     "2017-2018",
     "2018-2019",
     "2019-2020",
     "2020-2021",
-    "2021-2022",
-    "2022-2023",
-    "2023-2024",
   ];
 
   //   classes
@@ -184,7 +211,12 @@ const ProjectForm = () => {
           </section>
         </div>
       </div>
-      <button type="submit">Submit</button>
+      <button
+        type="submit"
+        className="  px-4 py-2 bg-slate-900 text-white rounded-md w-1/2"
+      >
+        Submit
+      </button>
     </form>
   );
 };
