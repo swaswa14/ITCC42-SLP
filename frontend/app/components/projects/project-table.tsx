@@ -13,12 +13,16 @@ const ProjectTable = ({ initialData }: Props) => {
   console.log(initialData);
   return (
     <div className="space-y-8">
-      {Object.entries(initialData).map(([schoolYear, schoolYearProjects]) => (
-        <div key={schoolYear} className=" space-y-1  min-w-full">
-          <h1 className="font-bold text-lg">{schoolYear}</h1>
-          <DataTable columns={columns} data={schoolYearProjects} />
-        </div>
-      ))}
+      {initialData ? (
+        Object.entries(initialData).map(([schoolYear, schoolYearProjects]) => (
+          <div key={schoolYear} className=" space-y-1  min-w-full">
+            <h1 className="font-bold text-lg">{schoolYear}</h1>
+            <DataTable columns={columns} data={schoolYearProjects} />
+          </div>
+        ))
+      ) : (
+        <p>No data.</p>
+      )}
       <FormDialog />
     </div>
   );
