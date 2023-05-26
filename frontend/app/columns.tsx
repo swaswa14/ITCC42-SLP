@@ -43,6 +43,19 @@ export const columns: ColumnDef<ProjectType>[] = [
   {
     accessorKey: "amount",
     header: "Amount",
+    cell: ({ row }) => {
+      const commaNumber = require("comma-number");
+      const project = row.original;
+
+      return (
+        <div className=" flex flex-col gap-1">
+          <span>
+            {project.amount != 0.0 ? commaNumber(project.amount) : "--"}
+          </span>
+          <span>{project.amountRemarks}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "principalProponent",
