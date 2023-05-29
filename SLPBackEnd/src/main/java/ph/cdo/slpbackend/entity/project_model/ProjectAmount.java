@@ -1,6 +1,7 @@
 package ph.cdo.slpbackend.entity.project_model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.List;
 import java.util.Objects;
 
 @Builder
@@ -23,9 +25,9 @@ public class ProjectAmount {
     @Digits(integer = 9, fraction = 2)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#0.00")
     @PositiveOrZero
-    private Double value;
-
-    private String remarks;
+    private Double amount;
+    @ElementCollection
+    private List<String> remarks;
 
     @Override
     public boolean equals(Object o) {
@@ -34,11 +36,11 @@ public class ProjectAmount {
 
         ProjectAmount other = (ProjectAmount) o;
 
-        return Objects.equals(value, other.value);
+        return Objects.equals(amount, other.amount);
     }
 
     @Override
     public int hashCode() {
-        return value != null ? value.hashCode() : 0;
+        return amount != null ? amount.hashCode() : 0;
     }
 }

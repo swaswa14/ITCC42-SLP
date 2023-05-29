@@ -8,8 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 @Embeddable
@@ -19,8 +22,8 @@ import java.util.Objects;
 @NoArgsConstructor
 public class ProjectDate {
     @Temporal(TemporalType.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
-    private DateTime date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMMM yyyy")
+    private Date date;
 
     private String remarks;
 
@@ -40,6 +43,19 @@ public class ProjectDate {
         int result = date != null ? date.hashCode() : 0;
         result = 31 * result + (remarks != null ? remarks.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectDate{" +
+                "date=" + getFormattedDate() +
+                ", remarks='" + remarks + '\'' +
+                '}';
+    }
+
+    public String getFormattedDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
+        return formatter.format(date);
     }
 
 }

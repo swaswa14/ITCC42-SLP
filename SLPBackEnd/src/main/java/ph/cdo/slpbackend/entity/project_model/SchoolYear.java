@@ -32,6 +32,7 @@ public class SchoolYear {
     public String toString() {
         return "S.Y " + startYear + "-" + (endYear % 100);
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,12 +40,13 @@ public class SchoolYear {
 
         SchoolYear other = (SchoolYear) o;
 
-        return Objects.equals(startYear, other.startYear);
+        // Compare startYear and endYear in descending order
+        return other.startYear.equals(startYear) && other.endYear.equals(endYear);
     }
 
     @Override
     public int hashCode() {
-        return startYear != null ? startYear.hashCode() : 0;
+        // Hash based on startYear and endYear in descending order
+        return Objects.hash(startYear, endYear);
     }
-
 }

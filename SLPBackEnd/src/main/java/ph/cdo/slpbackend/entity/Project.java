@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import ph.cdo.slpbackend.entity.project_model.ProjectAmount;
 import ph.cdo.slpbackend.entity.project_model.ProjectDate;
 import ph.cdo.slpbackend.entity.project_model.SchoolYear;
@@ -31,25 +32,42 @@ public class Project {
     )
     private Long id;
 
+    @Builder.Default
+    private String leadUnit = "None";
+
+    @Builder.Default
+    private String title = "None";
+
 
     @Embedded
     private SchoolYear schoolYear;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "date", column = @Column(name = "startDate")),
+            @AttributeOverride(name = "remarks", column = @Column(name = "startDateRemarks"))
+    })
     private ProjectDate startDate;
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "date", column = @Column(name = "endDate")),
+            @AttributeOverride(name = "remarks", column = @Column(name = "endDateRemarks"))
+    })
     private ProjectDate endDate;
     @ElementCollection
-    private ArrayList<String> partnerOrFunder;
+    private List<String> partnersOrFunders;
 
     @Embedded
     private ProjectAmount projectAmount;
 
-    private String principalProponent;
+    @ElementCollection
+    private List<String> principalProponent;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+    @ElementCollection
+    private List<String> projectRemarks;
 
-    private String projectRemarks;
+
 
 }
