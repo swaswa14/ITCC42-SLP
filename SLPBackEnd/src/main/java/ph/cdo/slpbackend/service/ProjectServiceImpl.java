@@ -68,6 +68,16 @@ public class ProjectServiceImpl implements ProjectService{
         });
 
 
+        for (Map.Entry<String, List<ProjectDTO>> entry : projectsBySchoolYear.entrySet()) {
+
+            List<ProjectDTO> projects = entry.getValue();
+
+            for (int i = 0; i < projects.size(); i++) {
+                projects.get(i).setNumber(i+1);
+            }
+
+        }
+
         return projectsBySchoolYear;
 
     }
