@@ -6,6 +6,7 @@ import ph.cdo.slpbackend.dto.ProjectDTO;
 import ph.cdo.slpbackend.entity.Project;
 import ph.cdo.slpbackend.entity.project_model.ProjectAmount;
 import ph.cdo.slpbackend.entity.project_model.ProjectDate;
+import ph.cdo.slpbackend.entity.project_model.ProjectDateDTO;
 import ph.cdo.slpbackend.entity.project_model.SchoolYear;
 import ph.cdo.slpbackend.form.NewProjectForm;
 import ph.cdo.slpbackend.repository.ProjectRepository;
@@ -180,15 +181,13 @@ public class ProjectServiceImpl implements ProjectService{
                 .id(project.getId())
                 .leadUnit(project.getLeadUnit())
                 .schoolYear(project.getSchoolYear().toString())
-                .startDate(project.getStartDate().getFormattedDate())
-                .startDateRemarks(project.getStartDate().getRemarks())
-                .endDate(project.getEndDate().getFormattedDate())
-                .endDateRemarks(project.getEndDate().getRemarks())
+                .startDate(new ProjectDateDTO(project.getStartDate()))
+                .endDate(new ProjectDateDTO(project.getEndDate()))
                 .partnersOrFunders(project.getPartnersOrFunders())
-                .amount(project.getProjectAmount().getAmount())
-                .amountRemarks(project.getProjectAmount().getRemarks())
+                .projectAmount(project.getProjectAmount())
                 .principalProponent(project.getPrincipalProponent())
                 .status(project.getStatus())
+                .title(project.getTitle())
                 .remarks(project.getProjectRemarks())
                 .build();
     }

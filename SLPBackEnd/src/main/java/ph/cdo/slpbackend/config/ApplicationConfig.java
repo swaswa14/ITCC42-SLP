@@ -30,7 +30,7 @@ public class ApplicationConfig {
 
 
     @Bean
-    @Profile("dev")
+    @Profile({"dev", "test"})
     public CommandLineRunner commandLineRunner(
             @Autowired Faker faker,
             @Autowired Random random,
@@ -56,6 +56,7 @@ public class ApplicationConfig {
                 NewProjectForm form =  NewProjectForm.builder()
                         .leadUnit(faker.company().name())
                         .schoolYearStart((long) (startSchoolYear))
+                        .title(faker.company().catchPhrase())
                         .schoolYearEnd((long) (endSchoolYear))
                         .startDate(startDate)
                         .startDateRemarks(faker.lorem().sentence())

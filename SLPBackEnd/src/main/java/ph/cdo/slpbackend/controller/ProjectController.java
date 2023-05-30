@@ -10,9 +10,7 @@ import ph.cdo.slpbackend.entity.Project;
 import ph.cdo.slpbackend.form.NewProjectForm;
 import ph.cdo.slpbackend.service.ProjectService;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/project")
@@ -70,13 +68,27 @@ public class ProjectController {
 
 
     @GetMapping(value = "/mapped_projects")
-    public ResponseEntity<Map<String, List<ProjectDTO>>> getMapped(){
-        return ResponseEntity.ok(projectService.retrieveMappedProjects());
+    public ResponseEntity<Map<String, Object>> getMapped(){
+        var mappedObject = projectService.retrieveMappedProjects();
+        var arrayMappedObject = new ArrayList<Map<String,Object>>();
+        for (Map.Entry<String, List<ProjectDTO>> entry : mappedObject.entrySet()) {
+            Map<String, Object> map = new TreeMap<>(Comparator.reverseOrder());
+            map.put("projects", entry.getValue());
+            map.put("schoolYear", entry.getKey());
+
+            arrayMappedObject.add(map);
+        }
+        Map<String, Object> temp = new HashMap<>();
+        temp.put("all", arrayMappedObject);
+        return ResponseEntity.ok(temp);
     }
 
     @GetMapping(value="/all")
-    public ResponseEntity<List<ProjectDTO>> getAll(){
-        return ResponseEntity.ok(projectService.retrieve());
+    public ResponseEntity<Map<String,Object>> getAll(){
+        var mappedObject = new HashMap<String, Object>();
+        var listDTO = projectService.retrieve();
+        mappedObject.put("all", listDTO);
+        return ResponseEntity.ok(mappedObject);
     }
 
     @DeleteMapping(value = "/delete/{id}")
