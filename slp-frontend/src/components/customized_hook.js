@@ -16,9 +16,13 @@ export default function MultipleStringInput({strings, setStrings, label, placeHo
 
             setFormState({
                 ...formState,
-                [name]: (strings)
+                [name]: [...strings, inputValue.trim()] // Update the form state with the updated strings array
             });
+
         }
+
+
+        console.log("here  at handleKeyDown " + strings)
     };
 
     const handleDelete = (index) => {

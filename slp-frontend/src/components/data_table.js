@@ -21,8 +21,6 @@ function FieldButton({data, single}){
     const handleClick = (event) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
     };
-    console.log("Field Button " + data)
-    console.log("single " + single)
     return(
         <>
             <Tooltip title={"Remarks"}>

@@ -23,7 +23,7 @@ public class NewProjectForm {
     private String leadUnit;
 
     private Long schoolYearStart;
-    private Long schoolYearEnd;
+
 
     private String title;
     private Date startDate;
@@ -41,8 +41,8 @@ public class NewProjectForm {
 
     private List<String> principalProponent;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+
+    private String status;
 
     private ArrayList<String> remarks;
 }

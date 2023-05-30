@@ -38,19 +38,18 @@ function MyForm({handleClose}) {
     const [isLoading, setLoading] = useState(false);
     const [formState, setFormState] = useState({
         leadUnit: '',
-        schoolYearStart: 0,
-        schoolYearEnd: '',
+        schoolYearStart: 2023,
         title: '',
         startDate: '',
         startDateRemarks: '',
         endDate: '',
         endDateRemarks: '',
-        partnersOrFunders: [],
+        partnersOrFunders: '',
         amount: '',
-        amountRemarks: [],
-        principalProponent: [],
+        amountRemarks: '',
+        principalProponent: '',
         status: '',
-        remarks: []
+        remarks: ''
     });
 
     const handleChange = (e) => {
@@ -64,15 +63,15 @@ function MyForm({handleClose}) {
         e.preventDefault();
         setLoading(true);
 
-        const formattedDate = [ {
+        const formattedDate =  {
             ...formState,
             ["startDate"] : formatDate(formState.startDate),
-            ["endDate"] : formatDate(formState.endDate)
+            ["endDate"] : formatDate(formState.endDate),
         }
 
-        ]
+
         mutation.mutate(formattedDate)
-        console.log(formState);
+        console.log(formattedDate);
     };
 
     const mutation = useMutation({
@@ -109,15 +108,10 @@ function MyForm({handleClose}) {
                     } fullWidth type={"number"}/>
 
                 </Grid>
-                <Grid item xs={6}>
-
-                    <TextField name="schoolYearEnd" label="School Year End" value={parseInt(formState.schoolYearStart, 10) + 1} onChange={handleChange} fullWidth type={"number"} disabled/>
-
-                </Grid>
 
                 <Grid item xs={6}>
 
-                    <TextField name="startDate" label="Start Date" type="date" InputLabelProps={{ shrink: true }} value={formState.startDate} onChange={handleChange} fullWidth />
+                    <TextField name="startDate" label="Start Date" type="date" InputLabelProps={{ shrink: true }} value={formState.startDate} onChange={handleChange} fullWidth defaultValue={new Date()}/>
 
                 </Grid>
                 <Grid item xs={6}>
@@ -127,7 +121,7 @@ function MyForm({handleClose}) {
 
                 {/*sdsad*/}
                 <Grid item xs={6}>
-                    <TextField name="endDate" label="End Date" type="date" InputLabelProps={{ shrink: true }} value={formState.endDate} onChange={handleChange} fullWidth />
+                    <TextField name="endDate" label="End Date" type="date" InputLabelProps={{ shrink: true }} value={formState.endDate} onChange={handleChange} fullWidth  defaultValue={new Date()}/>
 
                 </Grid>
                 <Grid item xs={6}>
@@ -177,7 +171,7 @@ function MyForm({handleClose}) {
 
                 <Grid item xs={12} style={{display: "flex", flexDirection: "row", justifyContent: "center", textAlign : "center"}}>
 
-                    <Button type="submit" width={"30%"} variant="outlined" onClick={handleSubmit}>
+                    <Button  width={"30%"} variant="outlined" onClick={handleSubmit}>
                         {!isLoading && <Typography variant={"button"}>Submit</Typography>}
                         {isLoading && <Typography variant={"button"}>Loading...</Typography>}
                     </Button>

@@ -24,7 +24,7 @@ export default function MappedAccordion({ initialData }){
     const all = data?.all;
     return(
         <Box style={{display: "flex", flexDirection: "column", padding: "1rem", margin: "1rem", gap: "2rem"}}>
-            {all.map((item, index) =>{
+            {all?.map((item, index) =>{
                 return(
                     <div key={index}>
                         <SchoolYearAccordion data={item?.projects} title={item.schoolYear}/>

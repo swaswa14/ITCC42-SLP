@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ph.cdo.slpbackend.dto.ProjectDTO;
 import ph.cdo.slpbackend.entity.Project;
-import ph.cdo.slpbackend.entity.project_model.ProjectAmount;
-import ph.cdo.slpbackend.entity.project_model.ProjectDate;
-import ph.cdo.slpbackend.entity.project_model.ProjectDateDTO;
-import ph.cdo.slpbackend.entity.project_model.SchoolYear;
+import ph.cdo.slpbackend.entity.project_model.*;
 import ph.cdo.slpbackend.form.NewProjectForm;
 import ph.cdo.slpbackend.repository.ProjectRepository;
 
@@ -88,10 +85,10 @@ public class ProjectServiceImpl implements ProjectService{
       Project project = retrieve(id);
         project.setLeadUnit((newProjectForm.getLeadUnit() != null && !newProjectForm.getLeadUnit().trim().isEmpty()) ? newProjectForm.getLeadUnit() : "None");
 
-        project.setSchoolYear((newProjectForm.getSchoolYearStart() != null && newProjectForm.getSchoolYearEnd() != null) ?
+        project.setSchoolYear((newProjectForm.getSchoolYearStart() != null ) ?
                 SchoolYear.builder()
                         .startYear(newProjectForm.getSchoolYearStart())
-                        .endYear(newProjectForm.getSchoolYearEnd())
+                        .endYear(newProjectForm.getSchoolYearStart()+1)
                         .build()
                 : project.getSchoolYear());
 
@@ -126,7 +123,7 @@ public class ProjectServiceImpl implements ProjectService{
                 newProjectForm.getPrincipalProponent()
                 : new ArrayList<>(Collections.singletonList("None")));
 
-        project.setStatus(newProjectForm.getStatus());
+        project.setStatus(Status.fromString(newProjectForm.getStatus()));
 
         project.setProjectRemarks((newProjectForm.getRemarks() != null && !newProjectForm.getRemarks().isEmpty()) ?
                 newProjectForm.getRemarks()
@@ -153,7 +150,7 @@ public class ProjectServiceImpl implements ProjectService{
                 .title(newProjectForm.getTitle())
                 .schoolYear(SchoolYear.builder()
                         .startYear(newProjectForm.getSchoolYearStart())
-                        .endYear(newProjectForm.getSchoolYearEnd())
+                        .endYear(newProjectForm.getSchoolYearStart() +1)
                         .build())
                 .startDate(ProjectDate.builder()
                         .date(newProjectForm.getStartDate())
@@ -169,7 +166,7 @@ public class ProjectServiceImpl implements ProjectService{
                         .remarks(newProjectForm.getAmountRemarks())
                         .build())
                 .principalProponent(newProjectForm.getPrincipalProponent())
-                .status(newProjectForm.getStatus())
+                .status(Status.fromString(newProjectForm.getStatus()))
                 .projectRemarks(newProjectForm.getRemarks())
                 .build();
     }
