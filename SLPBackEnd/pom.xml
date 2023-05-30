@@ -10,7 +10,7 @@
     </parent>
     <groupId>ph.cdo</groupId>
     <artifactId>SLPBackEnd</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>SLPBackEnd</name>
     <description>SLPBackEnd</description>
     <properties>
