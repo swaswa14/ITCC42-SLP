@@ -56,7 +56,6 @@ public class ProjectServiceTest {
             NewProjectForm form =  NewProjectForm.builder()
                     .leadUnit(faker.company().name())
                     .schoolYearStart((long) (startSchoolYear))
-                    .schoolYearEnd((long) (endSchoolYear))
                     .startDate(startDate)
                     .startDateRemarks(faker.lorem().sentence())
                     .endDate(endDate)
@@ -65,7 +64,7 @@ public class ProjectServiceTest {
                     .amount(Math.floor(random.nextDouble() * 10000))
                     .amountRemarks(new ArrayList<String>(Arrays.asList(faker.lorem().sentence(), faker.lorem().sentence())))
                     .principalProponent(new ArrayList<String>(Arrays.asList(principalProponent)))
-                    .status(Status.values()[random.nextInt(Status.values().length)])
+                    .status(Status.values()[random.nextInt(Status.values().length)].name())
                     .remarks(new ArrayList<String>(Arrays.asList(faker.lorem().sentence(), faker.lorem().sentence())))
                     .build();
 
@@ -186,7 +185,6 @@ public class ProjectServiceTest {
         NewProjectForm form =  NewProjectForm.builder()
                 .leadUnit(faker.company().name())
                 .schoolYearStart((long) (startSchoolYear))
-                .schoolYearEnd((long) (endSchoolYear))
                 .startDate(startDate)
                 .startDateRemarks(faker.lorem().sentence())
                 .endDate(endDate)
@@ -195,7 +193,7 @@ public class ProjectServiceTest {
                 .amount(Math.floor(random.nextDouble() * 10000))
                 .amountRemarks(new ArrayList<String>(Arrays.asList(faker.lorem().sentence(), faker.lorem().sentence())))
                 .principalProponent(new ArrayList<String>(Arrays.asList(principalProponent)))
-                .status(Status.values()[random.nextInt(Status.values().length)])
+                .status(Status.values()[random.nextInt(Status.values().length)].name())
                 .remarks(new ArrayList<String>(Arrays.asList(faker.lorem().sentence(), faker.lorem().sentence())))
                 .build();
 
