@@ -105,11 +105,6 @@ function MyForm({handleClose}) {
                 </Grid>
                 <Grid item xs={6}>
 
-                    <TextField name="title" label="Title" value={formState.title} onChange={handleChange} fullWidth />
-
-                </Grid>
-                <Grid item xs={6}>
-
                     <TextField name="schoolYearStart" label="School Year Start" value={formState.schoolYearStart} onChange={(e)=> {
 
                         handleChange(e);
@@ -117,6 +112,12 @@ function MyForm({handleClose}) {
                     } fullWidth type={"number"}/>
 
                 </Grid>
+                <Grid item xs={12}>
+
+                    <TextField name="title" label="Title" value={formState.title} onChange={handleChange} fullWidth />
+
+                </Grid>
+
 
                 <Grid item xs={6}>
 
