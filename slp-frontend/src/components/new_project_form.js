@@ -69,18 +69,27 @@ function MyForm({handleClose}) {
             ["endDate"] : formatDate(formState.endDate),
         }
 
+        setTimeout(()=>{
+            mutation.mutate(formattedDate)
+        }, 1000);
 
-        mutation.mutate(formattedDate)
-        console.log(formattedDate);
+
+
     };
 
     const mutation = useMutation({
         mutationFn: createProject,
         onSuccess: () => {
+            setLoading(false);
             // Invalidate and refetch
-            queryClient.invalidateQueries({ queryKey: ['all_mapped_data'] }).then( handleClose()).then(setLoading(false))
-
+            queryClient.invalidateQueries({ queryKey: ['all_mapped_data'] });
+            handleClose();
         },
+        onError: () =>{
+            setLoading(false);
+            alert("Error occured!");
+        }
+
 
     })
 
